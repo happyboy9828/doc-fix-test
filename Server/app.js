@@ -94,6 +94,21 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Root endpoint with welcome message
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Welcome to DocFix API Server',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      health: '/health',
+      api: '/api/v1',
+      documentation: '/api/docs',
+    },
+  });
+});
+
 app.get('/api', (req, res) => {
   const dbStatus = mongoose.connection.readyState;
   const dbStatusMap = {
