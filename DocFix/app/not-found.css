@@ -1,0 +1,151 @@
+/* 404 page. Scoped to .nf-* on top of the .tool-page shell, so the page keeps
+   the shared padding, colours and card styles from app/tool.css. */
+
+/* ---------- hero ---------- */
+.nf {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.nf-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 36px 24px 32px;
+  overflow: hidden;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+}
+
+/* One soft glow behind the mark keeps the empty state from reading as an error
+   screen, and a faint grid gives the dashed art something to sit on. */
+.nf-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 70% at 50% 0%, color-mix(in srgb, var(--tool-accent) 20%, transparent), transparent 70%),
+    linear-gradient(var(--tool-border) 1px, transparent 1px) 0 0 / 100% 28px,
+    linear-gradient(90deg, var(--tool-border) 1px, transparent 1px) 0 0 / 28px 100%;
+  opacity: 0.5;
+}
+
+.nf-art {
+  position: relative;
+  width: 168px;
+  height: 107px;
+  color: var(--tool-accent);
+}
+
+/* ---------- headline ---------- */
+.nf-code {
+  position: relative;
+  margin: 10px 0 0;
+  font: 700 clamp(64px, 16vw, 116px) / 0.9 var(--tool-font), system-ui, sans-serif;
+  letter-spacing: -0.05em;
+  color: var(--tool-text);
+  /* The numeral is decoration: the heading below carries the meaning. */
+  opacity: 0.16;
+  user-select: none;
+}
+
+.nf-title {
+  position: relative;
+  margin: 6px 0 0;
+  font-size: var(--tool-h1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.nf-lead {
+  position: relative;
+  max-width: 52ch;
+  margin: 8px 0 0;
+  color: var(--tool-muted);
+}
+
+/* ---------- requested path ---------- */
+.nf-path {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 18px 0 0;
+  padding: 6px 12px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: 999px;
+}
+.nf-path-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tool-muted);
+}
+.nf-path-value {
+  font: 12.5px var(--tool-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--tool-accent-text);
+  /* A long slug must not stretch the pill past the card. */
+  max-width: min(60vw, 420px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- actions ---------- */
+.nf-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 22px;
+}
+.nf-actions .nf-btn-primary,
+.nf-actions .nf-btn-ghost {
+  /* tool-btn-primary is full width by default; the row lays them out itself. */
+  width: auto;
+  padding: 11px 20px;
+  text-decoration: none;
+}
+.nf-btn-primary {
+  background: var(--tool-accent);
+  border: 1px solid var(--tool-accent);
+  color: var(--tool-on-accent);
+}
+.nf-btn-primary:hover { background: var(--tool-accent-hover); border-color: var(--tool-accent-hover); }
+.nf-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  color: var(--tool-text);
+}
+.nf-btn-ghost:hover { border-color: var(--tool-accent); }
+.nf-actions .tool-btn:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+/* ---------- tool list ---------- */
+.nf-list-title {
+  margin: 0 0 var(--tool-gap);
+  font-size: var(--tool-h2);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .nf { gap: 32px; }
+  .nf-hero { padding: 28px 16px 26px; }
+  .nf-actions { width: 100%; }
+  .nf-actions .nf-btn-primary,
+  .nf-actions .nf-btn-ghost { flex: 1 1 200px; justify-content: center; }
+}

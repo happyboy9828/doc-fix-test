@@ -1,0 +1,65 @@
+/* Compress Image only. Page shell, cards, controls, buttons, badges and
+   toasts come from app/tool.css; everything below is specific to this tool. */
+
+.ci-good { color: var(--tool-accent-text); }
+
+.ci-metric {
+  display: flex; flex-direction: column; gap: 2px;
+  margin: 12px 0 4px; padding: 12px 14px;
+  border: 1px solid var(--tool-border); border-radius: var(--tool-radius);
+  background: var(--background);
+}
+.ci-metric > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ci-metric-value { font-size: 18px; font-weight: 600; color: var(--tool-accent-text); }
+.ci-metric-value.is-busy { opacity: 0.55; }
+
+.ci-actions { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Inspector */
+.ci-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.ci-side { min-width: 0; }
+.ci-side-head { display: flex; flex-direction: column; margin-bottom: 8px; font-size: 14px; }
+.ci-size { font-size: 20px; font-weight: 600; }
+.ci-sub { font-size: 12px; color: var(--tool-muted); }
+.ci-sub.ci-good { color: var(--tool-accent-text); font-weight: 600; }
+.ci-pane {
+  position: relative; height: 320px; overflow: hidden; user-select: none; -webkit-user-select: none;
+  border: 1px solid var(--tool-border); border-radius: var(--tool-radius-sm);
+}
+.ci-pane.can-pan { cursor: grab; }
+.ci-pane.can-pan:active { cursor: grabbing; }
+.ci-busy {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  padding: 12px; text-align: center; font-size: 13px; color: var(--tool-muted);
+  background: color-mix(in srgb, var(--background) 70%, transparent);
+}
+.ci-zoom {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--tool-border);
+}
+
+/* Queue */
+.ci-queue { list-style: none; margin: 0; padding: 0; max-height: 280px; overflow-y: auto; }
+.ci-qitem { display: flex; align-items: center; border: 1px solid transparent; border-bottom-color: var(--tool-border); }
+.ci-qitem.is-selected { background: var(--tool-tint); border-color: var(--tool-accent); border-radius: var(--tool-radius-sm); }
+.ci-qbtn {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  flex: 1; min-width: 0; padding: 10px 12px; text-align: left;
+  background: none; border: 0; color: inherit; font: inherit; cursor: pointer;
+}
+.ci-qbtn:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: -2px; border-radius: var(--tool-radius-sm); }
+.ci-qname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+.ci-qsize { flex: none; font-size: 12.5px; color: var(--tool-muted); }
+.ci-x {
+  appearance: none; width: 32px; height: 32px; margin-right: 6px;
+  border: 0; border-radius: 6px; background: none; color: var(--tool-muted);
+  font-size: 20px; cursor: pointer;
+}
+.ci-x:hover { color: var(--tool-text); background: var(--tool-tint); }
+.ci-x:focus-visible { outline: 2px solid var(--tool-accent-text); }
+.ci-total { margin: 12px 0 0; font-size: 13px; color: var(--tool-accent-text); }
+
+@media (max-width: 520px) {
+  .ci-compare { grid-template-columns: minmax(0, 1fr); }
+  .ci-pane { height: 240px; }
+}

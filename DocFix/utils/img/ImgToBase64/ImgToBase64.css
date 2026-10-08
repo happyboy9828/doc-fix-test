@@ -1,0 +1,67 @@
+/* Image to Base64 only. Page shell, cards, controls, buttons, badges and toasts
+   come from app/tool.css; everything below is specific to this tool. */
+
+.itb-card {
+  display: flex; gap: 16px; align-items: flex-start; margin-top: 16px; padding: 14px;
+  border: 1px solid var(--tool-border); border-radius: var(--tool-radius-sm);
+  background: var(--background);
+}
+.itb-thumb {
+  flex: none; width: 96px; height: 96px; object-fit: contain;
+  border: 1px solid var(--tool-border); border-radius: var(--tool-radius-sm);
+}
+.itb-card-body { flex: 1; min-width: 0; }
+.itb-file-name { margin: 0 0 8px; font-weight: 600; overflow-wrap: anywhere; }
+.itb-meta { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; margin: 0 0 12px; font-size: 13px; }
+.itb-meta dt { color: var(--tool-muted); }
+.itb-meta dd { margin: 0; overflow-wrap: anywhere; }
+
+/* format tabs */
+.itb-tabs {
+  display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px; padding: 4px;
+  border: 1px solid var(--tool-border); border-radius: var(--tool-radius-sm);
+  background: var(--background);
+}
+.itb-tab {
+  flex: 1 1 auto; padding: 8px 12px; border: 0; border-radius: 6px; cursor: pointer;
+  background: transparent; color: var(--tool-muted);
+  font: 600 14px var(--tool-font), system-ui, sans-serif;
+  transition: background 0.15s, color 0.15s;
+}
+.itb-tab:hover { color: var(--tool-text); }
+.itb-tab[aria-selected="true"] { background: var(--tool-accent); color: var(--tool-on-accent); }
+.itb-tab:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+.itb-code { max-height: 260px; white-space: pre-wrap; word-break: break-all; color: var(--tool-text); }
+
+/* stats */
+.itb-stats {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px;
+  margin: 20px 0 0; padding-top: 16px; border-top: 1px solid var(--tool-border);
+}
+.itb-stats dt { font-size: 12.5px; color: var(--tool-muted); }
+.itb-stats dd { margin: 0; font-family: var(--tool-mono), ui-monospace, monospace; font-size: 14px; font-weight: 600; }
+
+/* busy overlay on the drop zone */
+.itb-spinner-wrap {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px; border-radius: 10px;
+  background: color-mix(in srgb, var(--tool-surface) 88%, transparent);
+  font-size: 14px; color: var(--tool-muted);
+}
+.itb-spinner {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 3px solid var(--tool-border); border-top-color: var(--tool-accent);
+  animation: itb-spin 0.8s linear infinite;
+}
+@keyframes itb-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+  .itb-card { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .itb-spinner { animation: none; }
+}

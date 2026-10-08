@@ -1,0 +1,175 @@
+/* PricingModal.css — the "Get Pro" popup from the navbar. It sits
+   above every other overlay (ads at 70, the mobile drawer at 200)
+   because it is the one surface the reader explicitly asked for.
+   All colours come from the shared tokens in app/globals.css so the
+   popup tracks the active theme. */
+
+.pricing-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--overlay-bg);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  overflow-y: auto;
+  animation: pricing-modal-in 0.18s ease-out;
+}
+
+@keyframes pricing-modal-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pricing-modal-dialog {
+  width: 100%;
+  max-width: 780px;
+  margin: auto;
+  background: var(--tool-surface);
+  color: var(--tool-text);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  box-shadow: var(--tool-shadow);
+  animation: pricing-modal-slide 0.2s ease-out;
+}
+
+@keyframes pricing-modal-slide {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pricing-modal-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 0;
+}
+
+.pricing-modal-eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tool-accent-text);
+}
+
+.pricing-modal-title {
+  margin: 4px 0 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.pricing-modal-close {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 1px solid var(--tool-border);
+  border-radius: 8px;
+  background: var(--tool-surface-2);
+  color: var(--tool-muted);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.pricing-modal-close:hover {
+  color: var(--tool-text);
+  background: var(--tool-tint-strong);
+}
+
+.pricing-modal-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+.pricing-modal-body {
+  padding: 18px 24px 8px;
+}
+
+/* Compact the shared pricing table for the popup: the cards are
+   narrower here than on the full pricing page. */
+.pricing-modal-body .pricing-freqs {
+  margin-bottom: 18px;
+}
+
+.pricing-modal-body .pricing-grid {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.pricing-modal-body .pricing-card {
+  padding: 16px;
+  gap: 12px;
+}
+
+.pricing-modal-body .pricing-amount {
+  font-size: 30px;
+}
+
+.pricing-modal-body .pricing-feature {
+  font-size: 13px;
+}
+
+.pricing-modal-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 24px 20px;
+  margin-top: 14px;
+  border-top: 1px solid var(--tool-border);
+}
+
+.pricing-modal-note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--tool-muted);
+}
+
+.pricing-modal-full {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tool-accent-text);
+  text-decoration: none;
+}
+
+.pricing-modal-full:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .pricing-modal {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .pricing-modal-dialog {
+    max-width: 100%;
+  }
+
+  .pricing-modal-body .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}

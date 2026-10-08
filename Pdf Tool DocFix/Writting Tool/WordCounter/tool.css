@@ -1,0 +1,235 @@
+/* Container Layout */
+.word-counter-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1e293b;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.word-counter-header {
+  margin-bottom: 24px;
+}
+
+.word-counter-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+
+.word-counter-header p {
+  font-size: 15px;
+  color: #64748b;
+  margin: 0;
+}
+
+.word-counter-layout {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.word-counter-left,
+.word-counter-right {
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Quick Tools Bar */
+.quick-tools-bar {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-tool {
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-tool:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.btn-tool-danger:hover {
+  background-color: #fef2f2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+/* Editor Backdrop & Textarea */
+.editor-wrapper {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.editor-wrapper:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.editor-highlights,
+.editor-textarea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  margin: 0;
+  border: none;
+}
+
+.editor-highlights {
+  color: transparent;
+  overflow-y: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.editor-textarea {
+  background: transparent;
+  color: #1e293b;
+  resize: none;
+  outline: none;
+  z-index: 2;
+}
+
+.editor-highlights mark {
+  color: transparent;
+  background-color: #fef08a;
+  border-radius: 2px;
+}
+
+/* Formatting Safeguards */
+.safeguard-bar {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #475569;
+  align-items: center;
+}
+
+.safeguard-bar label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Analytics Panels */
+.analytics-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.analytics-card h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin: 0 0 12px 0;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.times-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Keyword Density */
+.density-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.density-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.density-item:hover {
+  background-color: #fef9c3;
+  border-color: #fde047;
+}
+
+/* Toast Notifications */
+.word-counter-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.word-counter-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}

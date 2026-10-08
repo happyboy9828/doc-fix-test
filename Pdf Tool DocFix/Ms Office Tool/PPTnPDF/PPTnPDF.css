@@ -1,0 +1,294 @@
+/* src/utility/tool.css */
+
+.ppt-pdf-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  color: #1f2937;
+  box-sizing: border-box;
+}
+
+.ppt-pdf-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.ppt-pdf-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #111827;
+}
+
+.ppt-pdf-header p {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.ppt-pdf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 850px) {
+  .ppt-pdf-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ppt-pdf-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* Radio Modes & Options */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.radio-label:hover {
+  background-color: #f9fafb;
+}
+
+.radio-label input[type="radio"] {
+  accent-color: #2563eb;
+  width: 16px;
+  height: 16px;
+}
+
+/* Dropzone */
+.dropzone {
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 32px 16px;
+  text-align: center;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dropzone:hover, .dropzone.drag-over {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.dropzone-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.dropzone-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.dropzone-subtext {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+/* Summary & Inspection */
+.summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-list li {
+  display: flex;
+  justify-content: space-between;
+  color: #4b5563;
+}
+
+.summary-list li span.val {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Slide Carousel Strip */
+.slide-strip-container {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 8px 4px 12px 4px;
+  scroll-behavior: smooth;
+}
+
+.slide-strip-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.slide-strip-container::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.slide-thumb-card {
+  flex: 0 0 110px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 6px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.slide-thumb-card:hover {
+  transform: translateY(-2px);
+  border-color: #2563eb;
+}
+
+.slide-thumb-card.handout-mode {
+  flex: 0 0 160px;
+  flex-direction: row;
+}
+
+.slide-thumb-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #f3f4f6;
+  background: #f9fafb;
+}
+
+.handout-notes-lines {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.slide-thumb-card.handout-mode .handout-notes-lines {
+  display: flex;
+}
+
+.line {
+  height: 2px;
+  background: #e5e7eb;
+  width: 100%;
+}
+
+.slide-thumb-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Progress Status Bar */
+.progress-container {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: #2563eb;
+  transition: width 0.2s ease;
+}
+
+.progress-text {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: right;
+}
+
+/* Buttons */
+.btn {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-primary:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+.btn-success {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.btn-success:hover {
+  background-color: #047857;
+}
+
+.btn-success:disabled {
+  background-color: #a7f3d0;
+  cursor: not-allowed;
+}

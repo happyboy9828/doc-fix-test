@@ -1,0 +1,257 @@
+/* SplitPdf.css — Split PDF tool styles */
+
+.sp-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+}
+
+.sp-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.sp-header h1 {
+  font-size: 28px;
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+
+.sp-header p {
+  color: #64748b;
+  margin: 0;
+}
+
+.sp-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+}
+
+/* Drop Zone & Banners */
+.sp-drop-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.sp-drop-zone.drag-over {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.sp-drop-zone-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.sp-browse-label {
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.sp-active-doc-banner {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 12px 16px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.sp-selection-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #475569;
+  font-weight: 600;
+}
+
+/* Thumbnail Grid */
+.sp-thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.sp-thumb-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.sp-thumb-card:hover {
+  border-color: #94a3b8;
+}
+
+.sp-thumb-card.selected {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.sp-thumb-checkbox {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.sp-thumb-card canvas {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-top: 14px;
+  max-width: 100%;
+}
+
+.sp-thumb-card span {
+  font-size: 11px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Cards & Inputs */
+.sp-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.sp-settings-card h3 {
+  font-size: 15px;
+  margin: 0 0 12px 0;
+  color: #0f172a;
+}
+
+.sp-divider {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 16px 0;
+}
+
+.sp-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sp-radio-label {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.sp-text-input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.sp-number-input {
+  width: 50px;
+  padding: 2px 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
+
+.sp-selection-count {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Buttons */
+.sp-btn-primary,
+.sp-btn-secondary-sm,
+.sp-btn-remove,
+.sp-btn-success {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sp-btn-primary {
+  background: #2563eb;
+  color: white;
+  padding: 10px 16px;
+  width: 100%;
+}
+
+.sp-btn-primary:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.sp-btn-secondary-sm {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.sp-btn-remove {
+  background: none;
+  font-size: 20px;
+  color: #64748b;
+}
+
+.sp-btn-remove:hover {
+  color: #ef4444;
+}
+
+.sp-btn-success {
+  background: #16a34a;
+  color: white;
+  padding: 10px 16px;
+  width: 100%;
+}
+
+/* Progress */
+.sp-progress-container {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.sp-progress-bar {
+  height: 100%;
+  background: #2563eb;
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .sp-layout {
+    grid-template-columns: 1fr;
+  }
+}

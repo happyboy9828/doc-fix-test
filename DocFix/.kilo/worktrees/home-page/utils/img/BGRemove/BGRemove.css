@@ -1,0 +1,77 @@
+/* Remove BG only. Page shell, cards, controls, buttons, badges and toasts come
+   from app/tool.css; everything below is specific to this tool. */
+
+.rb-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* Stage */
+.rb-stage-wrap {
+  display: flex; justify-content: center;
+  padding: 14px; border-radius: var(--tool-radius); background: var(--tool-surface);
+}
+.rb-stage {
+  position: relative; overflow: hidden;
+  border: 1.5px dashed var(--tool-accent); border-radius: var(--tool-radius-sm);
+  background: var(--background); user-select: none; -webkit-user-select: none;
+}
+.rb-stage.is-ready { border-color: color-mix(in srgb, var(--tool-accent-text) 55%, transparent); }
+.rb-stage.has-tool { cursor: none; }
+.rb-layer { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+
+/* Split divider */
+.rb-divider {
+  position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px;
+  background: var(--tool-text); box-shadow: 0 0 0 1px color-mix(in srgb, var(--background) 40%, transparent);
+  pointer-events: none;
+}
+.rb-handle {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  display: grid; place-items: center; width: 34px; height: 34px;
+  border-radius: 50%; background: var(--tool-accent); color: var(--tool-on-accent); font-size: 16px;
+  box-shadow: 0 2px 10px var(--tool-shadow);
+}
+.rb-chip {
+  position: absolute; top: 10px; padding: 3px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 500; pointer-events: none;
+  background: color-mix(in srgb, var(--background) 80%, transparent); color: var(--tool-text);
+}
+.rb-chip-l { left: 10px; }
+.rb-chip-r { right: 10px; }
+
+/* Scan loader (transform-only so it keeps moving while detection runs) */
+.rb-scan { position: absolute; inset: 0; overflow: hidden; background: color-mix(in srgb, var(--background) 35%, transparent); pointer-events: none; }
+.rb-scan-line {
+  position: absolute; left: 0; right: 0; top: 0; height: 100%;
+  background: linear-gradient(to bottom, transparent 0, transparent calc(100% - 90px), color-mix(in srgb, var(--tool-accent) 35%, transparent) calc(100% - 3px), var(--tool-accent-text) calc(100% - 3px));
+  box-shadow: 0 2px 18px 2px color-mix(in srgb, var(--tool-accent-text) 80%, transparent);
+  animation: rb-scan 1.2s ease-in-out infinite;
+}
+@keyframes rb-scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+.rb-chip-status { top: auto; bottom: 12px; left: 50%; transform: translateX(-50%); background: var(--tool-accent); color: var(--tool-on-accent); }
+
+/* Brush cursor */
+.rb-cursor {
+  position: absolute; left: 0; top: 0; border-radius: 50%; pointer-events: none; opacity: 0;
+  border: 1.5px dashed var(--tool-text); box-shadow: 0 0 0 1px color-mix(in srgb, var(--background) 70%, transparent);
+}
+.rb-cursor-erase { background: color-mix(in srgb, var(--tool-text) 22%, transparent); }
+.rb-cursor-restore { background: color-mix(in srgb, var(--tool-accent-text) 30%, transparent); }
+
+/* Brush tool toggles */
+.rb-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+.rb-tool {
+  flex: 1; min-width: 110px; appearance: none; padding: 10px 12px;
+  border-radius: var(--tool-radius-sm); cursor: pointer;
+  border: 1px solid var(--tool-border); background: transparent; color: var(--tool-text);
+  font: 500 14px var(--tool-font), system-ui, sans-serif;
+}
+.rb-tool:hover:not(:disabled) { border-color: var(--tool-accent); }
+.rb-tool.is-active { background: var(--tool-accent); border-color: var(--tool-accent); color: var(--tool-on-accent); }
+.rb-tool:disabled { opacity: 0.4; cursor: not-allowed; }
+.rb-tool:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-scan-line { animation-duration: 2.4s; }
+}

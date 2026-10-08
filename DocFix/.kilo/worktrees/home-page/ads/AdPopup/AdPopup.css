@@ -1,0 +1,171 @@
+/* Popup advertisement overlay. Scoped to .ad-popup-* and mounted at the document
+   root, so it brings its own box-sizing instead of relying on the .tool-page
+   reset in app/tool.css. Colours come from the shared --tool-* tokens.
+
+   Sits above the navbar (z-index 60) and below nothing else in the app. */
+
+.ad-popup,
+.ad-popup *,
+.ad-popup *::before,
+.ad-popup *::after { box-sizing: border-box; }
+
+/* ---------- overlay ---------- */
+.ad-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: color-mix(in srgb, #000 52%, transparent);
+  animation: ad-popup-fade 0.18s ease-out;
+}
+
+/* ---------- dialog ---------- */
+.ad-popup-dialog {
+  width: 100%;
+  max-width: 420px;
+  padding: 14px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  box-shadow: var(--tool-shadow);
+  animation: ad-popup-rise 0.2s ease-out;
+}
+
+@keyframes ad-popup-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ad-popup-rise {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- top bar ---------- */
+.ad-popup-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ad-popup-label {
+  padding: 2px 8px;
+  font: 600 11px var(--tool-font), system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tool-muted);
+  background: var(--tool-tint);
+  border: 1px solid var(--tool-border);
+  border-radius: 999px;
+}
+.ad-popup-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  cursor: pointer;
+  color: var(--tool-muted);
+  background: transparent;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  transition: color 0.15s, border-color 0.15s;
+}
+.ad-popup-close:hover { color: var(--tool-text); border-color: var(--tool-accent); }
+.ad-popup-close:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.ad-popup-close svg { width: 14px; height: 14px; }
+
+/* ---------- creative ---------- */
+.ad-popup-creative {
+  display: grid;
+  place-items: center;
+  height: 148px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--tool-accent) 26%, transparent), transparent 62%),
+    var(--tool-surface-2);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+}
+.ad-popup-mark {
+  font: 700 30px var(--tool-font), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--tool-text);
+}
+.ad-popup-creative > * { width: 100%; height: 100%; }
+
+/* ---------- copy ---------- */
+.ad-popup-body { padding: 14px 4px 4px; }
+.ad-popup-advertiser {
+  margin: 0 0 4px;
+  font-size: 12px;
+  color: var(--tool-muted);
+}
+.ad-popup-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.ad-popup-desc {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--tool-muted);
+}
+
+/* ---------- actions ---------- */
+.ad-popup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 4px 4px;
+}
+.ad-popup-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 11px 16px;
+  font: 600 14px var(--tool-font), system-ui, sans-serif;
+  color: var(--tool-on-accent);
+  text-decoration: none;
+  background: var(--tool-accent);
+  border: 1px solid var(--tool-accent);
+  border-radius: var(--tool-radius-sm);
+  transition: background 0.15s, border-color 0.15s;
+}
+.ad-popup-cta:hover { background: var(--tool-accent-hover); border-color: var(--tool-accent-hover); }
+.ad-popup-cta:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.ad-popup-dismiss {
+  appearance: none;
+  padding: 8px 16px;
+  font: 500 13px var(--tool-font), system-ui, sans-serif;
+  color: var(--tool-muted);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: var(--tool-radius-sm);
+  transition: color 0.15s, background 0.15s;
+}
+.ad-popup-dismiss:hover { color: var(--tool-text); background: var(--tool-tint); }
+.ad-popup-dismiss:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 480px) {
+  .ad-popup { padding: 12px; align-items: end; }
+  .ad-popup-dialog { max-width: none; }
+  .ad-popup-creative { height: 120px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-popup,
+  .ad-popup-dialog { animation: none; }
+  .ad-popup-close,
+  .ad-popup-cta,
+  .ad-popup-dismiss { transition: none; }
+}

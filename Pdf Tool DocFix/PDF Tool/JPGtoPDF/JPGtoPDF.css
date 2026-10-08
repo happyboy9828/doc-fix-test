@@ -1,0 +1,296 @@
+/* src/utility/tool.css */
+
+.jpg-pdf-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+}
+
+.jpg-pdf-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.jpg-pdf-header h1 {
+  font-size: 28px;
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+
+.jpg-pdf-header p {
+  color: #64748b;
+  margin: 0;
+}
+
+.jpg-pdf-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+}
+
+/* Cards & Components */
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.card h3 {
+  font-size: 16px;
+  margin: 0 0 16px 0;
+  color: #0f172a;
+}
+
+/* Drop Zone */
+.drop-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.drop-zone.drag-over {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.drop-zone-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.browse-label {
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Section Titles & Badges */
+.section-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  display: block;
+}
+
+.badge {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* Queue List */
+.image-queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-bottom: 16px;
+  min-height: 100px;
+}
+
+.placeholder-text {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  margin-top: 32px;
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.queue-item.dragging {
+  opacity: 0.5;
+  background: #f8fafc;
+}
+
+.queue-item:hover {
+  border-color: #cbd5e1;
+}
+
+/* Live Margin Preview Styles on Thumbnails */
+.queue-item.margin-preview-none .thumb-preview {
+  padding: 0;
+  border: 1px solid transparent;
+}
+
+.queue-item.margin-preview-small .thumb-preview {
+  padding: 3px;
+  border: 1px dashed #cbd5e1;
+}
+
+.queue-item.margin-preview-large .thumb-preview {
+  padding: 6px;
+  border: 1px dashed #94a3b8;
+}
+
+.drag-handle {
+  color: #94a3b8;
+  cursor: grab;
+}
+
+.thumb-preview {
+  width: 44px;
+  height: 44px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.thumb-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.file-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-danger-text {
+  color: #dc2626;
+}
+
+/* Form Controls & Toggles */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-toggle {
+  flex: 1;
+  padding: 8px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #475569;
+  transition: all 0.2s ease;
+}
+
+.btn-toggle.active {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.radio-label {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.text-input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 16px 0;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary-sm, .btn-remove {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+  padding: 10px 16px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.btn-primary:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.btn-secondary-sm {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.btn-remove {
+  background: none;
+  font-size: 20px;
+  color: #64748b;
+}
+
+.btn-remove:hover {
+  color: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .jpg-pdf-layout {
+    grid-template-columns: 1fr;
+  }
+}

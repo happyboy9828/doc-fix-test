@@ -1,0 +1,39 @@
+/* JPG to PNG only. Page shell, cards, controls, buttons, badges and toasts come
+   from app/tool.css; everything below is specific to this tool. */
+
+.j2p-queue-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.j2p-queue-head .tool-card-title { margin: 0; }
+
+.j2p-list { list-style: none; margin: 0; padding: 0; }
+.j2p-item {
+  position: relative; display: grid; align-items: center; gap: 12px; padding: 12px 0;
+  grid-template-columns: auto 56px minmax(0, 1fr) auto auto auto auto;
+  border-bottom: 1px solid var(--tool-border); overflow: hidden;
+}
+.j2p-item:last-child { border-bottom: 0; }
+.j2p-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--tool-accent); }
+.j2p-thumb { width: 56px; height: 56px; object-fit: cover; border-radius: var(--tool-radius-sm); }
+.j2p-info { display: flex; flex-direction: column; min-width: 0; }
+.j2p-name { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.j2p-meta { font-size: 12px; color: var(--tool-muted); }
+.j2p-out { font-size: 13px; color: var(--tool-muted); white-space: nowrap; }
+.j2p-done .j2p-out { color: var(--tool-text); font-weight: 600; }
+.j2p-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--tool-border); overflow: hidden; }
+.j2p-progress::after {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 35%;
+  background: var(--tool-accent); animation: j2p-slide 1s ease-in-out infinite;
+}
+@keyframes j2p-slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+
+@media (max-width: 640px) {
+  .j2p-item { grid-template-columns: auto 48px minmax(0, 1fr) auto auto; gap: 8px; }
+  .j2p-thumb { width: 48px; height: 48px; }
+  .j2p-out { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .j2p-progress::after { animation: none; }
+}

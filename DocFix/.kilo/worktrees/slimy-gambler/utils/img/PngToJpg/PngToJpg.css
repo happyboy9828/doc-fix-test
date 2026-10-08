@@ -1,0 +1,28 @@
+/* PNG to JPG only. Page shell, cards, controls, buttons, badges and toasts come
+   from app/tool.css; everything below is specific to this tool. */
+
+.p2j-good { color: var(--tool-text); }
+.p2j-dim { color: var(--tool-muted); font-size: 12px; }
+
+.p2j-qhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.p2j-queue { display: flex; flex-direction: column; gap: 12px; }
+.p2j-card {
+  display: flex; gap: 14px; padding: 12px;
+  border: 1px solid var(--tool-border); border-radius: var(--tool-radius-sm);
+  background: var(--background);
+}
+.p2j-thumbwrap {
+  flex: 0 0 140px; height: 140px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--tool-border); border-radius: var(--tool-radius-sm); overflow: hidden;
+}
+.p2j-thumb { max-width: 100%; max-height: 100%; }
+.p2j-info { flex: 1; min-width: 0; }
+.p2j-title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.p2j-name { font-weight: 600; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.p2j-stats { margin: 4px 0 10px; font-size: 13px; }
+.p2j-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .p2j-card { flex-direction: column; }
+  .p2j-thumbwrap { flex-basis: auto; width: 100%; height: 200px; }
+}

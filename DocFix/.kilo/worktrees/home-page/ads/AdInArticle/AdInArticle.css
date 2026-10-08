@@ -1,0 +1,113 @@
+/* Ad container 3: native in-article unit. Scoped to .ad-inline-*.
+   Transparent background and hairline rules keep it inside the prose column
+   instead of breaking the page into cards. Colours come from --tool-* tokens. */
+
+.ad-inline,
+.ad-inline *,
+.ad-inline *::before,
+.ad-inline *::after { box-sizing: border-box; }
+
+/* ---------- frame ---------- */
+.ad-inline {
+  display: block;
+  /* Vertical rhythm matches the article it sits in, so the unit reads as a
+     paragraph break rather than a widget. */
+  margin: 28px 0;
+  padding: 14px 0;
+  background: transparent;
+  border-top: 1px solid var(--tool-border);
+  border-bottom: 1px solid var(--tool-border);
+}
+
+/* ---------- disclosure ---------- */
+.ad-inline-disclosure { margin: 0 0 10px; }
+.ad-inline-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tool-muted);
+}
+
+/* ---------- row ---------- */
+.ad-inline-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 10px 12px;
+  margin: -10px -12px;
+  border-radius: var(--tool-radius-sm);
+  transition: background 0.15s;
+}
+.ad-inline-row:hover { background: var(--tool-tint); }
+
+/* ---------- brand mark ---------- */
+.ad-inline-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  font: 600 13px var(--tool-font), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  color: var(--tool-text);
+  background: var(--tool-surface-2);
+  border: 1px solid var(--tool-border);
+  border-radius: 50%;
+}
+.ad-inline-mark > img,
+.ad-inline-mark > svg { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- copy ---------- */
+.ad-inline-body { min-width: 0; }
+.ad-inline-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--tool-text);
+  text-decoration: none;
+}
+.ad-inline-title:hover { text-decoration: underline; }
+.ad-inline-title:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.ad-inline-desc {
+  margin: 2px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--tool-muted);
+}
+.ad-inline-advertiser {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--tool-muted);
+}
+
+/* ---------- call to action ---------- */
+/* A text link, not a button: inside prose a filled button reads as site UI. */
+.ad-inline-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 6px 10px;
+  font: 600 13px var(--tool-font), system-ui, sans-serif;
+  white-space: nowrap;
+  color: var(--tool-accent-text);
+  text-decoration: none;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  transition: background 0.15s, border-color 0.15s;
+}
+.ad-inline-cta:hover { background: var(--tool-tint-strong); border-color: var(--tool-accent); }
+.ad-inline-cta:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 560px) {
+  .ad-inline-row { grid-template-columns: auto minmax(0, 1fr); }
+  .ad-inline-cta { grid-column: 1 / -1; justify-content: center; margin-top: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-inline-row,
+  .ad-inline-cta { transition: none; }
+}

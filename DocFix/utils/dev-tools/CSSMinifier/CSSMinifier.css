@@ -1,0 +1,313 @@
+/* CSS Minifier only. Page shell, cards, controls, buttons, badges and toasts
+   come from app/tool.css; everything below is specific to this tool. */
+
+.cssmin {
+  --cm-bg: var(--background);
+  --cm-card: var(--tool-surface);
+  --cm-code: var(--tool-surface-2);
+  --cm-text: var(--tool-text);
+  --cm-muted: var(--tool-muted);
+  --cm-border: var(--tool-border);
+  --cm-accent: var(--tool-accent);
+  --cm-accent-hover: var(--tool-accent-hover);
+  --cm-on-accent: var(--tool-on-accent);
+  --cm-ok: #16a34a;
+  --cm-err: #dc2626;
+  --cm-err-bg: rgba(220, 38, 38, 0.14);
+  --cm-err-soft: #fef2f2;
+  --cm-err-border: #fecaca;
+  --cm-err-text: #b91c1c;
+
+  max-width: var(--tool-width);
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  color: var(--cm-text);
+  font-family: var(--tool-font), system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .cssmin,
+[data-theme="neon"] .cssmin {
+  --cm-ok: #4ade80;
+  --cm-err: #f87171;
+  --cm-err-bg: rgba(248, 113, 113, 0.18);
+  --cm-err-soft: #2a1517;
+  --cm-err-border: #5b2226;
+  --cm-err-text: #fca5a5;
+}
+
+[data-theme="neon"] .cssmin {
+  --cm-ok: #4ade80;
+  --cm-err: #f87171;
+  --cm-err-bg: rgba(248, 113, 113, 0.22);
+  --cm-err-soft: #2a1517;
+  --cm-err-border: #5b2226;
+  --cm-err-text: #fca5a5;
+}
+
+.cssmin *,
+.cssmin *::before,
+.cssmin *::after {
+  box-sizing: border-box;
+}
+
+/* ---------- header ---------- */
+.cssmin__header {
+  margin-bottom: 20px;
+}
+.cssmin__header h1 {
+  margin: 0 0 4px;
+  font-size: 28px;
+  font-weight: 700;
+}
+.cssmin__header p {
+  margin: 0;
+  color: var(--cm-muted);
+}
+
+/* ---------- layout ---------- */
+.cssmin__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .cssmin__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cssmin__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  background: var(--cm-card);
+  border: 1px solid var(--cm-border);
+  border-radius: var(--tool-radius);
+}
+.cssmin__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cm-muted);
+}
+.cssmin__toolbar,
+.cssmin__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- buttons ---------- */
+.cssmin__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cm-text);
+  background: transparent;
+  border: 1px solid var(--cm-border);
+  border-radius: var(--tool-radius-sm);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+.cssmin__btn:hover:not(:disabled) {
+  border-color: var(--cm-accent);
+}
+.cssmin__btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.cssmin__btn:focus-visible {
+  outline: 2px solid var(--cm-accent);
+  outline-offset: 2px;
+}
+.cssmin__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.cssmin__btn--primary {
+  color: var(--cm-on-accent);
+  background: var(--cm-accent);
+  border-color: var(--cm-accent);
+}
+.cssmin__btn--primary:hover:not(:disabled) {
+  background: var(--cm-accent-hover);
+  border-color: var(--cm-accent-hover);
+}
+.cssmin__btn.is-success,
+.cssmin__btn.is-success:hover {
+  color: var(--cm-on-accent);
+  background: var(--cm-ok);
+  border-color: var(--cm-ok);
+  animation: cssmin-pop 0.25s ease;
+}
+.cssmin__check path {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: cssmin-draw 0.4s ease forwards;
+}
+@keyframes cssmin-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes cssmin-pop {
+  0% {
+    transform: scale(0.96);
+  }
+  60% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ---------- error ribbon ---------- */
+.cssmin__ribbon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--cm-err-text);
+  background: var(--cm-err-soft);
+  border: 1px solid var(--cm-err-border);
+  border-radius: var(--tool-radius-sm);
+  cursor: pointer;
+}
+.cssmin__ribbon[hidden] {
+  display: none;
+}
+.cssmin__ribbon svg {
+  flex: none;
+}
+
+/* ---------- editor (line numbers + textarea) ---------- */
+.cssmin__editor {
+  display: flex;
+  height: 340px;
+  overflow: hidden;
+  background: var(--cm-code);
+  border: 1px solid var(--cm-border);
+  border-radius: var(--tool-radius-sm);
+}
+.cssmin__editor--output {
+  height: 260px;
+}
+.cssmin__editor:focus-within {
+  border-color: var(--cm-accent);
+}
+.cssmin__gutter {
+  flex: none;
+  width: 48px;
+  padding: 10px 8px 24px 0;
+  overflow: hidden;
+  font: 13px/20px var(--tool-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-align: right;
+  color: var(--cm-muted);
+  background: var(--cm-card);
+  border-right: 1px solid var(--cm-border);
+  user-select: none;
+}
+.cssmin__gutter div {
+  height: 20px;
+}
+.cssmin__gutter .is-error {
+  margin-left: 6px;
+  padding-right: 8px;
+  margin-right: -8px;
+  font-weight: 700;
+  color: var(--cm-on-accent);
+  background: var(--cm-err);
+}
+.cssmin__textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  margin: 0;
+  font: 13px/20px var(--tool-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--cm-text);
+  white-space: pre;
+  overflow: auto;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  resize: none;
+  tab-size: 2;
+}
+.cssmin__textarea::placeholder {
+  color: var(--cm-muted);
+  opacity: 0.7;
+}
+
+/* ---------- metrics ---------- */
+.cssmin__metrics {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 28px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.cssmin__badge {
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cm-on-accent);
+  background: var(--cm-ok);
+  border-radius: 999px;
+}
+.cssmin__badge.is-worse {
+  background: var(--cm-err);
+}
+.cssmin__badge[hidden] {
+  display: none;
+}
+
+/* ---------- rules ---------- */
+.cssmin__rules {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 10px 14px 12px;
+  border: 1px solid var(--cm-border);
+  border-radius: var(--tool-radius-sm);
+}
+.cssmin__rules legend {
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cm-muted);
+}
+.cssmin__rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.cssmin__rule input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--cm-accent);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cssmin__btn.is-success,
+  .cssmin__btn.is-success:hover {
+    animation: none;
+  }
+  .cssmin__check path {
+    animation: none;
+  }
+}

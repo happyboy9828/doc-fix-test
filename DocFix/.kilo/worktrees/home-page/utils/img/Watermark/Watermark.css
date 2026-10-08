@@ -1,0 +1,88 @@
+/* Watermark only. Page shell, cards, controls, buttons, badges and toasts come
+   from app/tool.css; everything below is specific to this tool. */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Pacifico&family=Caveat:wght@700&display=swap");
+
+/* ---------- preview stage ---------- */
+.wm-stage-wrap {
+  padding: 14px; background: var(--tool-surface); border: 2px dashed transparent;
+  border-radius: var(--tool-radius); display: flex; flex-direction: column;
+  align-items: center; transition: border-color .15s;
+}
+.wm-stage-wrap.is-dragging { border-color: var(--tool-accent); }
+.wm-stage {
+  position: relative; border-radius: var(--tool-radius-sm); overflow: hidden;
+  background: var(--background); user-select: none; -webkit-user-select: none; touch-action: auto;
+}
+.wm-stage.is-draggable { cursor: grab; touch-action: none; }
+.wm-stage.is-draggable:active { cursor: grabbing; }
+.wm-canvas { display: block; width: 100%; height: 100%; }
+.wm-chip {
+  position: absolute; left: 10px; top: 10px; padding: 4px 11px; border-radius: 99px;
+  font-size: 12px; font-weight: 500; background: color-mix(in srgb, var(--background) 80%, transparent);
+  color: var(--tool-accent-text); pointer-events: none;
+}
+.wm-chip-warn { top: auto; bottom: 10px; color: var(--background); background: var(--tool-accent); }
+
+/* ---------- card header (title + action) ---------- */
+.wm-card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.wm-card-head .tool-card-title { margin: 0; }
+
+/* ---------- status text ---------- */
+.wm-status { margin: 12px 0 0; font-size: 14px; color: var(--tool-muted); }
+
+/* ---------- font picker ---------- */
+.wm-fonts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.wm-font {
+  appearance: none; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 10px 6px; border-radius: var(--tool-radius-sm); border: 1px solid var(--tool-border);
+  background: transparent; color: var(--tool-text); cursor: pointer;
+}
+.wm-font-sample { font-size: 24px; line-height: 1.1; }
+.wm-font-name { font: 400 11px var(--tool-mono), ui-monospace, monospace; color: var(--tool-muted); }
+.wm-font:hover { border-color: var(--tool-accent); }
+.wm-font.is-active { border-color: var(--tool-accent); background: var(--tool-tint); }
+.wm-font.is-active .wm-font-name { color: var(--tool-accent-text); }
+.wm-font:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+/* ---------- 9-point anchor grid ---------- */
+.wm-anchors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.wm-anchors.is-off { opacity: .4; }
+.wm-anchor {
+  appearance: none; padding: 11px 4px; border-radius: var(--tool-radius-sm); border: 1px solid var(--tool-border);
+  background: transparent; color: var(--tool-text); font: 500 12.5px var(--tool-font), system-ui, sans-serif;
+  cursor: pointer;
+}
+.wm-anchor:hover:not(:disabled) { border-color: var(--tool-accent); }
+.wm-anchor.is-active { background: var(--tool-accent); border-color: var(--tool-accent); color: var(--tool-on-accent); font-weight: 700; }
+.wm-anchor:disabled { cursor: not-allowed; }
+.wm-anchor:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+/* ---------- logo upload ---------- */
+.wm-logo-row { display: flex; align-items: center; gap: 12px; }
+.wm-logo-thumb { width: 56px; height: 56px; object-fit: contain; border-radius: var(--tool-radius-sm); border: 1px solid var(--tool-border); background: var(--background); }
+
+/* ---------- batch thumbnails ---------- */
+.wm-thumbs { list-style: none; margin: 14px 0 0; padding: 0; display: flex; gap: 10px; flex-wrap: wrap; }
+.wm-thumb { position: relative; width: 64px; height: 64px; }
+.wm-thumb-btn {
+  appearance: none; width: 100%; height: 100%; padding: 0; border: 2px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm); overflow: hidden; background: var(--background); cursor: pointer;
+}
+.wm-thumb.is-selected .wm-thumb-btn { border-color: var(--tool-accent); }
+.wm-thumb-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wm-thumb-btn:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.wm-thumb-x {
+  position: absolute; top: -7px; right: -7px; width: 22px; height: 22px; padding: 0; border: 0;
+  border-radius: 50%; background: var(--tool-muted); color: var(--background); font-size: 15px; line-height: 1; cursor: pointer;
+}
+.wm-thumb-x:hover { background: var(--tool-accent-text); }
+.wm-thumb-x:focus-visible { outline: 2px solid var(--tool-accent-text); }
+
+/* ---------- hint centring ---------- */
+.wm-center { text-align: center; }
+
+@media (max-width: 520px) {
+  .wm-fonts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wm-anchors { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

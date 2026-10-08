@@ -1,0 +1,140 @@
+/* Ad container 6: push notification consent card. Scoped to .ad-push-* and
+   mounted at the document root, so it brings its own box-sizing instead of
+   relying on the .tool-page reset in app/tool.css. Colours come from the shared
+   --tool-* tokens.
+
+   Fixed to the bottom-left like a real push notification, but non-modal: the
+   page stays scrollable and focusable, so a reader who ignores it keeps working.
+   Sits under the AdPopup overlay (z-index 70) and above the navbar (60). */
+
+.ad-push,
+.ad-push *,
+.ad-push *::before,
+.ad-push *::after { box-sizing: border-box; }
+
+/* ---------- frame ---------- */
+.ad-push {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 65;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 12px 14px;
+  width: 100%;
+  max-width: 360px;
+  padding: 14px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  box-shadow: var(--tool-shadow);
+  animation: ad-push-rise 0.2s ease-out;
+}
+
+@keyframes ad-push-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- brand mark ---------- */
+.ad-push-mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  font: 700 15px var(--tool-font), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--tool-text);
+  background:
+    radial-gradient(120% 130% at 0% 0%, color-mix(in srgb, var(--tool-accent) 26%, transparent), transparent 64%),
+    var(--tool-surface-2);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+}
+
+/* ---------- copy ---------- */
+.ad-push-body { min-width: 0; }
+.ad-push-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 12px;
+  color: var(--tool-muted);
+}
+.ad-push-label {
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tool-muted);
+  background: var(--tool-tint);
+  border: 1px solid var(--tool-border);
+  border-radius: 999px;
+}
+.ad-push-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.ad-push-desc {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tool-muted);
+}
+
+/* ---------- actions ---------- */
+.ad-push-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+}
+.ad-push-cta {
+  flex: 1 1 auto;
+  padding: 9px 14px;
+  font: 600 13px var(--tool-font), system-ui, sans-serif;
+  color: var(--tool-on-accent);
+  cursor: pointer;
+  background: var(--tool-accent);
+  border: 1px solid var(--tool-accent);
+  border-radius: var(--tool-radius-sm);
+  transition: background 0.15s, border-color 0.15s;
+}
+.ad-push-cta:hover { background: var(--tool-accent-hover); border-color: var(--tool-accent-hover); }
+.ad-push-cta:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.ad-push-decline {
+  flex: none;
+  padding: 9px 14px;
+  font: 500 13px var(--tool-font), system-ui, sans-serif;
+  color: var(--tool-muted);
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  transition: color 0.15s, border-color 0.15s;
+}
+.ad-push-decline:hover { color: var(--tool-text); border-color: var(--tool-accent); }
+.ad-push-decline:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 480px) {
+  /* Full width sheet, lifted clear of the iOS home indicator. */
+  .ad-push {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-push { animation: none; }
+  .ad-push-cta,
+  .ad-push-decline { transition: none; }
+}

@@ -1,0 +1,50 @@
+/* Favicon Generator only. Page shell, cards, controls, buttons, badges and
+   toasts come from app/tool.css; everything below is specific to this tool. */
+
+.fg-drop-empty { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.fg-drop-loaded { display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; }
+.fg-drop-loaded > div { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+.fg-file-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 600; }
+.fg-thumb {
+  width: 64px; height: 64px; object-fit: contain; border-radius: var(--tool-radius-sm);
+  border: 1px solid var(--tool-border); background: var(--background); flex: none;
+}
+
+/* Preview matrix */
+.fg-matrix { display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.fg-fig { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.fg-fig figcaption { font-size: 12px; color: var(--tool-muted); }
+.fg-checker { padding: 8px; border: 1px solid var(--tool-border); border-radius: var(--tool-radius-sm); line-height: 0; }
+.fg-canvas { display: block; max-width: 100%; }
+
+/* Browser tab mockups */
+.fg-tab { display: flex; align-items: flex-end; gap: 14px; height: 44px; margin-bottom: 10px; padding: 8px 12px 0; border-radius: 10px 10px 0 0; }
+.fg-tab-dots { display: flex; gap: 6px; align-self: center; margin-bottom: 8px; }
+.fg-tab-dots i { width: 10px; height: 10px; border-radius: 50%; background: currentColor; opacity: 0.35; }
+.fg-tab-item {
+  display: flex; align-items: center; gap: 8px; width: 220px; max-width: 100%; height: 34px; padding: 0 10px;
+  border-radius: 8px 8px 0 0; font-size: 12px;
+}
+.fg-tab-item .fg-canvas { flex: none; }
+.fg-tab-placeholder { width: 16px; height: 16px; border-radius: 3px; background: currentColor; opacity: 0.2; flex: none; }
+.fg-tab-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fg-tab-close { opacity: 0.6; font-size: 14px; }
+.fg-tab-dark { background: color-mix(in srgb, var(--tool-text) 88%, var(--background)); color: var(--background); }
+.fg-tab-dark .fg-tab-item { background: color-mix(in srgb, var(--tool-text) 72%, var(--background)); }
+.fg-tab-light { background: color-mix(in srgb, var(--tool-text) 16%, var(--background)); color: var(--tool-text); }
+.fg-tab-light .fg-tab-item { background: var(--background); }
+
+/* Checklist */
+.fg-checklist { list-style: none; margin: 0; padding: 0; }
+.fg-checklist li + li { border-top: 1px solid var(--tool-border); }
+.fg-check { display: flex; align-items: center; gap: 10px; padding: 10px 0; cursor: pointer; flex-wrap: wrap; }
+.fg-check input { width: 16px; height: 16px; margin: 0; accent-color: var(--tool-accent); }
+.fg-check input:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.fg-check-name { font: 500 13px var(--tool-mono), ui-monospace, monospace; }
+
+.fg-code { margin-bottom: 14px; }
+.fg-copied { display: inline-flex; align-items: center; gap: 6px; color: var(--tool-accent-text); animation: fg-pop 0.25s ease-out; }
+@keyframes fg-pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

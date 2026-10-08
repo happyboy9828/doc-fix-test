@@ -1,0 +1,410 @@
+/* HTML Minifier only. Page shell, cards, controls, buttons, badges and toasts
+   come from app/tool.css; everything below is specific to this tool. */
+
+.hm-root {
+  --hm-accent: #0f766e;
+  --hm-accent-hover: #0d9488;
+  --hm-accent-ink: #ffffff;
+  --hm-add: #0b6b3a;
+  --hm-add-bg: #d5f2e0;
+  --hm-del: #a21d1d;
+  --hm-del-bg: #fbdcdc;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100%;
+  padding: 28px clamp(16px, 4vw, 40px) 40px;
+  background: var(--background);
+  color: var(--tool-text);
+  font-family: var(--tool-font), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  position: relative;
+}
+
+[data-theme="dark"] .hm-root {
+  --hm-accent: #2dd4bf;
+  --hm-accent-hover: #5eead4;
+  --hm-accent-ink: #07201c;
+  --hm-add: #7ee2a8;
+  --hm-add-bg: #14402a;
+  --hm-del: #ff9b9b;
+  --hm-del-bg: #4a1c1c;
+}
+
+[data-theme="neon"] .hm-root {
+  --hm-accent: #22d3ee;
+  --hm-accent-hover: #67e8f9;
+  --hm-accent-ink: #042f3a;
+  --hm-add: #4ade80;
+  --hm-add-bg: #14402a;
+  --hm-del: #f87171;
+  --hm-del-bg: #4a1c1c;
+}
+
+.hm-root *,
+.hm-root *::before,
+.hm-root *::after {
+  box-sizing: border-box;
+}
+
+/* ---------- header ---------- */
+.hm-header {
+  max-width: var(--tool-width);
+  margin: 0 auto 20px;
+}
+
+.hm-header h1 {
+  margin: 0 0 4px;
+  font-size: clamp(26px, 4vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.hm-header p {
+  margin: 0;
+  color: var(--tool-muted);
+  max-width: 62ch;
+}
+
+.hm-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  max-width: var(--tool-width);
+  margin: 0 auto;
+}
+
+.hm-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+}
+
+.hm-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hm-panel-head h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.hm-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ---------- buttons ---------- */
+.hm-btn,
+.hm-tab {
+  font: inherit;
+  font-size: 14px;
+  padding: 7px 14px;
+  color: var(--tool-text);
+  background: transparent;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.hm-btn:hover,
+.hm-tab:hover {
+  border-color: var(--hm-accent);
+}
+
+.hm-btn-primary,
+.hm-tab[aria-pressed="true"] {
+  background: var(--hm-accent);
+  border-color: var(--hm-accent);
+  color: var(--hm-accent-ink);
+}
+
+.hm-root button:focus-visible,
+.hm-root select:focus-visible,
+.hm-root input:focus-visible,
+.hm-output:focus-visible,
+.hm-textarea:focus-visible {
+  outline: 2px solid var(--hm-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- editor ---------- */
+.hm-editor {
+  position: relative;
+  display: flex;
+  height: 340px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  overflow: hidden;
+}
+
+.hm-gutter,
+.hm-textarea,
+.hm-output {
+  margin: 0;
+  font-family: var(--tool-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.hm-gutter {
+  flex: none;
+  min-width: 46px;
+  padding: 12px 8px 12px 10px;
+  text-align: right;
+  color: var(--tool-muted);
+  background: var(--tool-surface);
+  overflow: hidden;
+  user-select: none;
+  border-right: 1px solid var(--tool-border);
+}
+
+.hm-textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  color: var(--tool-text);
+  background: transparent;
+  border: 0;
+  resize: none;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 2;
+}
+
+.hm-textarea:focus-visible {
+  outline-offset: -2px;
+}
+
+.hm-drop {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--hm-accent);
+  background: color-mix(in srgb, var(--tool-surface) 88%, transparent);
+  border: 2px dashed var(--hm-accent);
+  border-radius: var(--tool-radius-sm);
+  pointer-events: none;
+}
+
+.hm-dragging .hm-drop {
+  display: flex;
+}
+
+/* ---------- options ---------- */
+.hm-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+  margin: 0;
+  padding: 10px 14px 14px;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+}
+
+.hm-options legend {
+  padding: 0 6px;
+  font-size: 13px;
+  color: var(--tool-muted);
+}
+
+.hm-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.hm-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--hm-accent);
+}
+
+.hm-check-select {
+  grid-column: 1 / -1;
+  justify-content: space-between;
+}
+
+.hm-select {
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 8px;
+  color: var(--tool-text);
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+}
+
+/* ---------- stats ---------- */
+.hm-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.hm-stats > div {
+  padding: 10px 12px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+}
+
+.hm-stats dt {
+  font-size: 13px;
+  color: var(--tool-muted);
+}
+
+.hm-stats dd {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 18px;
+}
+
+.hm-badge {
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--hm-accent-ink);
+  background: var(--hm-accent);
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hm-badge[data-state="worse"] {
+  background: var(--hm-del);
+  color: var(--tool-surface);
+}
+
+.hm-pop {
+  animation: hm-pop 0.45s ease-out;
+}
+
+@keyframes hm-pop {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- output ---------- */
+.hm-output {
+  height: 250px;
+  padding: 12px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow: auto;
+}
+
+.hm-output:empty::before {
+  content: attr(data-placeholder);
+  color: var(--tool-muted);
+}
+
+.hm-legend {
+  display: flex;
+  gap: 10px;
+  margin: -4px 0 0;
+  font-size: 13px;
+}
+
+.hm-del,
+.hm-add {
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+.hm-del {
+  color: var(--hm-del);
+  background: var(--hm-del-bg);
+  text-decoration: line-through;
+}
+
+.hm-add {
+  color: var(--hm-add);
+  background: var(--hm-add-bg);
+}
+
+.hm-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hm-actions .hm-btn-primary {
+  margin-left: auto;
+}
+
+/* ---------- toast ---------- */
+.hm-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  padding: 9px 16px;
+  color: var(--hm-accent-ink);
+  background: var(--tool-text);
+  border-radius: var(--tool-radius-sm);
+  font-size: 14px;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.hm-toast-show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.hm-offscreen {
+  position: fixed;
+  top: -1000px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 860px) {
+  .hm-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hm-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hm-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hm-actions .hm-btn-primary {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-pop {
+    animation: none;
+  }
+  .hm-toast {
+    transition: none;
+  }
+}

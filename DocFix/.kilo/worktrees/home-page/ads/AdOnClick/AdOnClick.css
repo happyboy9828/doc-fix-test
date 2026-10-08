@@ -1,0 +1,207 @@
+/* Ad container 5: click-to-open interstitial. Scoped to .ad-onclick-* and mounted
+   at the document root, so it brings its own box-sizing instead of relying on the
+   .tool-page reset in app/tool.css. Colours come from the shared --tool-* tokens.
+
+   Shares the overlay surface with AdPopup, so only one of the
+   three is ever on screen (see ads/overlay.js). */
+
+.ad-onclick,
+.ad-onclick *,
+.ad-onclick *::before,
+.ad-onclick *::after { box-sizing: border-box; }
+
+/* ---------- overlay ---------- */
+.ad-onclick {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: color-mix(in srgb, #000 52%, transparent);
+  animation: ad-onclick-fade 0.18s ease-out;
+}
+
+/* ---------- dialog ---------- */
+.ad-onclick-dialog {
+  width: 100%;
+  max-width: 420px;
+  padding: 14px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  box-shadow: var(--tool-shadow);
+  animation: ad-onclick-rise 0.2s ease-out;
+}
+
+@keyframes ad-onclick-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ad-onclick-rise {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- top bar ---------- */
+.ad-onclick-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ad-onclick-label {
+  padding: 2px 8px;
+  font: 600 11px var(--tool-font), system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tool-muted);
+  background: var(--tool-tint);
+  border: 1px solid var(--tool-border);
+  border-radius: 999px;
+}
+.ad-onclick-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  cursor: pointer;
+  color: var(--tool-muted);
+  background: transparent;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  transition: color 0.15s, border-color 0.15s;
+}
+.ad-onclick-close:hover { color: var(--tool-text); border-color: var(--tool-accent); }
+.ad-onclick-close:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.ad-onclick-close svg { width: 14px; height: 14px; }
+
+/* ---------- creative ---------- */
+.ad-onclick-creative {
+  display: grid;
+  place-items: center;
+  height: 140px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--tool-accent) 26%, transparent), transparent 62%),
+    var(--tool-surface-2);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+}
+.ad-onclick-mark {
+  font: 700 30px var(--tool-font), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--tool-text);
+}
+.ad-onclick-creative > * { width: 100%; height: 100%; }
+
+/* ---------- copy ---------- */
+.ad-onclick-body { padding: 14px 4px 4px; }
+.ad-onclick-advertiser {
+  margin: 0 0 4px;
+  font-size: 12px;
+  color: var(--tool-muted);
+}
+.ad-onclick-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.ad-onclick-desc {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--tool-muted);
+}
+
+/* ---------- actions ---------- */
+.ad-onclick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 4px 4px;
+}
+.ad-onclick-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 11px 16px;
+  font: 600 14px var(--tool-font), system-ui, sans-serif;
+  color: var(--tool-on-accent);
+  text-decoration: none;
+  background: var(--tool-accent);
+  border: 1px solid var(--tool-accent);
+  border-radius: var(--tool-radius-sm);
+  transition: background 0.15s, border-color 0.15s;
+}
+.ad-onclick-cta:hover { background: var(--tool-accent-hover); border-color: var(--tool-accent-hover); }
+.ad-onclick-cta:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+/* Countdown state: same footprint, but visibly inert. */
+.ad-onclick-cta.is-waiting {
+  cursor: progress;
+  opacity: 0.55;
+  background: var(--tool-surface-2);
+  border-color: var(--tool-border);
+  color: var(--tool-muted);
+}
+.ad-onclick-dismiss {
+  appearance: none;
+  padding: 8px 16px;
+  font: 500 13px var(--tool-font), system-ui, sans-serif;
+  color: var(--tool-muted);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: var(--tool-radius-sm);
+  transition: color 0.15s, background 0.15s;
+}
+.ad-onclick-dismiss:hover { color: var(--tool-text); background: var(--tool-tint); }
+.ad-onclick-dismiss:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+
+/* ---------- countdown ---------- */
+.ad-onclick-countdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 4px 2px;
+}
+.ad-onclick-countdown-text {
+  font-size: 12px;
+  color: var(--tool-muted);
+  font-variant-numeric: tabular-nums;
+}
+.ad-onclick-countdown-track {
+  display: block;
+  height: 3px;
+  overflow: hidden;
+  background: var(--tool-border);
+  border-radius: 99px;
+}
+.ad-onclick-countdown-bar {
+  display: block;
+  height: 100%;
+  background: var(--tool-accent);
+  transition: width 0.2s linear;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 480px) {
+  .ad-onclick { padding: 12px; align-items: end; }
+  .ad-onclick-dialog { max-width: none; }
+  .ad-onclick-creative { height: 112px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-onclick,
+  .ad-onclick-dialog { animation: none; }
+  .ad-onclick-countdown-bar { transition: none; }
+  .ad-onclick-close,
+  .ad-onclick-cta,
+  .ad-onclick-dismiss { transition: none; }
+}

@@ -1,0 +1,183 @@
+/* Ad container 7: in-page push banner. Scoped to .ad-inpage-* and mounted at the
+   document root, so it brings its own box-sizing instead of relying on the
+   .tool-page reset in app/tool.css. Colours come from the shared --tool-* tokens.
+
+   Fixed to a corner, z-index 64: above the navbar (60), below the push consent
+   card (65) and the modal units (70), so the stacking order is predictable no
+   matter which units the page happens to mount. */
+
+.ad-inpage,
+.ad-inpage *,
+.ad-inpage *::before,
+.ad-inpage *::after { box-sizing: border-box; }
+
+/* ---------- frame ---------- */
+.ad-inpage {
+  position: fixed;
+  z-index: 64;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px 14px;
+  width: calc(100% - 32px);
+  max-width: 380px;
+  padding: 14px;
+  background: var(--background);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  box-shadow: var(--tool-shadow);
+  animation: ad-inpage-in 0.24s ease-out;
+}
+
+@keyframes ad-inpage-in {
+  from { opacity: 0; transform: translate(var(--ad-inpage-x, 0), var(--ad-inpage-y, 12px)); }
+  to { opacity: 1; transform: translate(0, 0); }
+}
+
+/* ---------- corner variants ---------- */
+/* The slide direction follows the corner, so the unit appears to come from off
+   screen rather than sliding across the page. */
+.ad-inpage.is-bottom-right { right: 16px; bottom: 16px; --ad-inpage-x: 16px; --ad-inpage-y: 0; }
+.ad-inpage.is-bottom-left { left: 16px; bottom: 16px; --ad-inpage-x: -16px; --ad-inpage-y: 0; }
+.ad-inpage.is-top-right { right: 16px; top: 16px; --ad-inpage-x: 16px; --ad-inpage-y: 0; }
+.ad-inpage.is-top-left { left: 16px; top: 16px; --ad-inpage-x: -16px; --ad-inpage-y: 0; }
+
+/* Corners under the sticky navbar need the navbar's height plus a gap, or the
+   banner hides behind it. */
+.ad-inpage.is-top-right,
+.ad-inpage.is-top-left { top: 76px; }
+
+/* ---------- brand mark ---------- */
+.ad-inpage-mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  font: 700 15px var(--tool-font), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--tool-text);
+  background:
+    radial-gradient(120% 130% at 0% 0%, color-mix(in srgb, var(--tool-accent) 26%, transparent), transparent 64%),
+    var(--tool-surface-2);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+}
+
+/* ---------- copy ---------- */
+.ad-inpage-body { min-width: 0; }
+.ad-inpage-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 12px;
+  color: var(--tool-muted);
+}
+.ad-inpage-label {
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tool-muted);
+  background: var(--tool-tint);
+  border: 1px solid var(--tool-border);
+  border-radius: 999px;
+}
+.ad-inpage-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--tool-text);
+  text-decoration: none;
+}
+.ad-inpage-title:hover { text-decoration: underline; }
+.ad-inpage-title:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.ad-inpage-desc {
+  margin: 3px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tool-muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* ---------- actions ---------- */
+.ad-inpage-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ad-inpage-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 14px;
+  font: 600 13px var(--tool-font), system-ui, sans-serif;
+  white-space: nowrap;
+  color: var(--tool-on-accent);
+  text-decoration: none;
+  background: var(--tool-accent);
+  border: 1px solid var(--tool-accent);
+  border-radius: var(--tool-radius-sm);
+  transition: background 0.15s, border-color 0.15s;
+}
+.ad-inpage-cta:hover { background: var(--tool-accent-hover); border-color: var(--tool-accent-hover); }
+.ad-inpage-cta:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.ad-inpage-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  cursor: pointer;
+  color: var(--tool-muted);
+  background: transparent;
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  transition: color 0.15s, border-color 0.15s;
+}
+.ad-inpage-close:hover { color: var(--tool-text); border-color: var(--tool-accent); }
+.ad-inpage-close:focus-visible { outline: 2px solid var(--tool-accent-text); outline-offset: 2px; }
+.ad-inpage-close svg { width: 13px; height: 13px; }
+
+/* ---------- auto-hide timer ---------- */
+/* Drained from the left to the right as the remaining time runs out. */
+.ad-inpage-timer {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  overflow: hidden;
+  background: var(--tool-border);
+  border-radius: 0 0 var(--tool-radius) var(--tool-radius);
+}
+.ad-inpage-timer-bar {
+  display: block;
+  height: 100%;
+  background: var(--tool-accent);
+  transition: width 0.2s linear;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 480px) {
+  .ad-inpage {
+    right: 12px;
+    left: 12px;
+    max-width: none;
+    /* A bottom-corner banner would sit under the home indicator. */
+    bottom: 12px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+  .ad-inpage.is-top-right,
+  .ad-inpage.is-top-left { top: 72px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-inpage { animation: none; }
+  .ad-inpage-timer-bar { transition: none; }
+  .ad-inpage-cta,
+  .ad-inpage-close { transition: none; }
+}

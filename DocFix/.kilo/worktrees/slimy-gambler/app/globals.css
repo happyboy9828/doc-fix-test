@@ -1,0 +1,1368 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F1F4F8;
+  --foreground: #0F172A;
+
+  /* Every tool stylesheet reads these, so all seven tools share one container
+     width, one font and one monospace face instead of hard-coding their own. */
+  --tool-width: 1120px;
+  --tool-font: var(--font-geist-sans);
+  --tool-mono: var(--font-geist-mono);
+
+  /* Shared surface tokens. Tools only map their own prefixed variables onto
+     these, which is what keeps the routes looking like one app. */
+  --tool-surface: #FFFFFF;
+  --tool-surface-2: #F8FAFC;
+  --tool-border: #E2E8F0;
+  --tool-text: #0F172A;
+  --tool-muted: #52606D;
+  --tool-accent: #1D4ED8;
+  --tool-accent-hover: #1E40AF;
+  --tool-accent-text: #1D4ED8;
+  --tool-on-accent: #FFFFFF;
+  --tool-tint: color-mix(in srgb, var(--foreground) 6%, transparent);
+  --tool-tint-strong: color-mix(in srgb, var(--foreground) 12%, transparent);
+  --tool-shadow: 0 10px 30px color-mix(in srgb, var(--foreground) 18%, transparent);
+
+  /* Shared page rhythm: padding, grid gap, card padding, radii, type scale. */
+  --tool-pad-top: 40px;
+  --tool-pad-x: 24px;
+  --tool-pad-bottom: 64px;
+  --tool-gap: 24px;
+  --tool-col-gap: 18px;
+  --tool-card-pad: 20px;
+  --tool-radius: 12px;
+  --tool-radius-sm: 8px;
+  --tool-h1: 32px;
+  --tool-h2: 16px;
+
+  /* Navbar aliases. components/Navbar/Navbar.css reads these so the navbar
+     tracks the active theme instead of carrying its own hard-coded palette.
+     Each one maps onto a shared token, never a literal colour. */
+  --nav-bg: color-mix(in srgb, var(--background) 92%, transparent);
+  --nav-text: var(--foreground);
+  --nav-border: var(--tool-border);
+  --nav-hover: var(--tool-tint);
+  --nav-limit-bg: color-mix(in srgb, #ef4444 14%, transparent);
+  --nav-limit-text: #b91c1c;
+   --overlay-bg: color-mix(in srgb, var(--foreground) 55%, transparent);
+  --font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Pro button gradient — warm gold conveys a premium tier without
+     clashing with any of the three themes. */
+  --pro-gradient-start: #fbbf24;
+  --pro-gradient-end: #f59e0b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --container-tool: var(--tool-width);
+}
+
+/* System default: follow the OS preference when no explicit choice is set. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0F172A;
+    --foreground: #EEF2F6;
+    --tool-surface: #1E293B;
+    --tool-surface-2: #1E293B;
+    --tool-border: #334155;
+    --tool-text: #EEF2F6;
+    --tool-muted: #94A3B8;
+    --tool-accent: #3B82F6;
+    --tool-accent-hover: #60A5FA;
+    --tool-accent-text: #3B82F6;
+    --tool-on-accent: #0F172A;
+
+    --nav-bg: color-mix(in srgb, var(--background) 94%, transparent);
+    --nav-text: var(--foreground);
+    --nav-border: var(--tool-border);
+    --nav-hover: var(--tool-tint);
+    --nav-limit-bg: color-mix(in srgb, #f87171 18%, transparent);
+    --nav-limit-text: #fca5a5;
+    --overlay-bg: color-mix(in srgb, var(--foreground) 60%, transparent);
+  }
+}
+
+/* Explicit Light: wins over the media query regardless of OS setting.
+   Cool, low-contrast surfaces keep the UI readable while the deeper navy
+   text and blue accent give it a professional, trustworthy weight. */
+:root[data-theme="light"] {
+  --background: #F1F4F8;
+  --foreground: #0F172A;
+  --tool-surface: #FFFFFF;
+  --tool-surface-2: #F8FAFC;
+  --tool-border: #E2E8F0;
+  --tool-text: #0F172A;
+  --tool-muted: #52606D;
+  --tool-accent: #1D4ED8;
+  --tool-accent-hover: #1E40AF;
+  --tool-accent-text: #1D4ED8;
+  --tool-on-accent: #FFFFFF;
+  --tool-tint: color-mix(in srgb, var(--foreground) 6%, transparent);
+  --tool-tint-strong: color-mix(in srgb, var(--foreground) 12%, transparent);
+  --tool-shadow: 0 10px 30px color-mix(in srgb, var(--foreground) 18%, transparent);
+}
+
+/* Explicit Dark: wins over the media query regardless of OS setting. */
+:root[data-theme="dark"] {
+  --background: #0F172A;
+  --foreground: #EEF2F6;
+  --tool-surface: #1E293B;
+  --tool-surface-2: #1E293B;
+  --tool-border: #334155;
+  --tool-text: #EEF2F6;
+  --tool-muted: #94A3B8;
+  --tool-accent: #3B82F6;
+  --tool-accent-hover: #60A5FA;
+  --tool-accent-text: #3B82F6;
+  --tool-on-accent: #0F172A;
+
+  --nav-bg: color-mix(in srgb, var(--background) 94%, transparent);
+  --nav-text: var(--foreground);
+  --nav-border: var(--tool-border);
+  --nav-hover: var(--tool-tint);
+  --nav-limit-bg: color-mix(in srgb, #f87171 18%, transparent);
+  --nav-limit-text: #fca5a5;
+  --overlay-bg: color-mix(in srgb, var(--foreground) 60%, transparent);
+}
+
+/* Neon: high-contrast dark with electric accent for a distinct look. */
+:root[data-theme="neon"] {
+  --background: #0A0E17;
+  --foreground: #E2E8F0;
+  --tool-surface: #111827;
+  --tool-surface-2: #0F172A;
+  --tool-border: #1E293B;
+  --tool-text: #E2E8F0;
+  --tool-muted: #94A3B8;
+  --tool-accent: #22D3EE;
+  --tool-accent-hover: #67E8F9;
+  --tool-accent-text: #22D3EE;
+  --tool-on-accent: #0A0E17;
+  --tool-tint: color-mix(in srgb, var(--foreground) 8%, transparent);
+  --tool-tint-strong: color-mix(in srgb, var(--foreground) 16%, transparent);
+  --tool-shadow: 0 10px 30px color-mix(in srgb, var(--foreground) 25%, transparent);
+
+  --nav-bg: color-mix(in srgb, var(--background) 94%, transparent);
+  --nav-text: var(--foreground);
+  --nav-border: var(--tool-border);
+  --nav-hover: var(--tool-tint);
+  --nav-limit-bg: color-mix(in srgb, #f87171 18%, transparent);
+  --nav-limit-text: #fca5a5;
+  --overlay-bg: color-mix(in srgb, var(--foreground) 60%, transparent);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--tool-font), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ---------- footer ---------- */
+/* A four-column footer: the brand with its trust line, the site
+   navigation, the popular tool categories and the legal links,
+   with a thin copyright strip along the bottom. It shares the
+   shell width so it lines up with the navbar, and its surface is
+   one step darker than the page so it reads as a boundary. */
+.tool-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--tool-border);
+  background: var(--tool-surface-2);
+  color: var(--tool-muted);
+}
+.tool-footer-inner {
+  width: 100%;
+  max-width: var(--tool-width);
+  margin: 0 auto;
+  padding: 40px var(--tool-pad-x) 30px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.25fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.tool-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tool-footer-logo {
+  display: inline-block;
+  color: var(--tool-text);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.tool-footer-logo:hover { opacity: 0.85; }
+.tool-footer-logo-mark {
+  display: block;
+  height: 30px;
+  width: auto;
+}
+.tool-footer-tag {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 34ch;
+}
+.tool-footer-heading {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tool-text);
+}
+.tool-footer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* The categories column breathes a little more between groups. */
+.tool-footer-categories { gap: 18px; }
+.tool-footer-link {
+  font-size: 13px;
+  color: var(--tool-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.tool-footer-link:hover { color: var(--tool-accent-text); }
+
+/* Category names are plain labels for now — the categories
+   have no landing pages of their own yet. */
+.tool-footer-category-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tool-text);
+}
+.tool-footer-meta {
+  width: 100%;
+  max-width: var(--tool-width);
+  margin: 0 auto;
+  padding: 14px var(--tool-pad-x) 22px;
+  border-top: 1px solid var(--tool-border);
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.tool-footer-sep { opacity: 0.5; }
+
+/* Desktop-only static columns. Hidden on narrow screens,
+   where the <details> accordion variant below takes over. */
+.tool-footer-section {
+  display: none;
+}
+
+/* Accordion / collapsible columns — narrow screens only.
+   Each section expands and collapses like a native
+   accordion; on desktop the static .tool-footer-section
+   columns replace them and every list is always visible. */
+.tool-footer-accordion {
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  background: var(--tool-surface);
+  overflow: hidden;
+}
+.tool-footer-accordion-head {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--tool-text);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tool-footer-accordion-head::-webkit-details-marker {
+  display: none;
+}
+.tool-footer-accordion-head .tool-footer-heading {
+  margin: 0;
+}
+.tool-footer-chevron {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--tool-muted);
+  transition: transform 0.2s ease;
+}
+.tool-footer-accordion[open] .tool-footer-chevron {
+  transform: rotate(180deg);
+}
+.tool-footer-accordion > .tool-footer-list {
+  padding: 0 16px 14px;
+  gap: 8px;
+}
+.tool-footer-accordion > .tool-footer-list .tool-footer-link,
+.tool-footer-accordion > .tool-footer-list .tool-footer-category-name {
+  font-size: 14px;
+  color: var(--tool-muted);
+}
+
+/* Desktop: replace the accordions with the static
+   columns, which render every list expanded — no
+   toggle, no click required. */
+@media (min-width: 641px) {
+  .tool-footer-accordion {
+    display: none;
+  }
+  .tool-footer-section {
+    display: block;
+  }
+  /* Keep the tighter desktop list rhythm; without this
+     the categories list would keep its roomier spacing. */
+  .tool-footer-section .tool-footer-list {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .tool-footer-inner { grid-template-columns: 1fr 1fr; }
+  .tool-footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  .tool-footer-inner {
+    padding: 28px 16px 22px;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .tool-footer-brand { grid-column: auto; }
+  .tool-footer-meta { padding: 10px 16px 18px; }
+}
+
+html {
+  scroll-padding-top: 4rem;
+}
+
+/* ---------- pricing ---------- */
+.pricing-shell {
+  width: 100%;
+}
+
+.pricing-freqs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--tool-surface-2);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  margin-bottom: 28px;
+}
+
+.pricing-freq {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--tool-muted);
+  padding: 8px 18px;
+  border-radius: calc(var(--tool-radius) - 4px);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.pricing-freq--active {
+  background: var(--tool-surface);
+  color: var(--tool-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.pricing-freq-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--tool-tint-strong);
+  color: var(--tool-accent-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  padding: 24px;
+  gap: 16px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.pricing-card:hover {
+  box-shadow: var(--tool-shadow);
+}
+
+.pricing-card--featured {
+  position: relative;
+}
+
+.pricing-card-badge {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  color: #fff;
+}
+
+.pricing-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pricing-tier-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--tool-text);
+}
+
+.pricing-tier-desc {
+  font-size: 13px;
+  color: var(--tool-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.pricing-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  padding: 4px 0;
+}
+
+.pricing-currency {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--tool-text);
+}
+
+.pricing-amount {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--tool-text);
+  letter-spacing: -0.02em;
+}
+
+.pricing-period {
+  font-size: 14px;
+  color: var(--tool-muted);
+  margin-left: 4px;
+}
+
+.pricing-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pricing-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--tool-text);
+  line-height: 1.4;
+}
+
+.pricing-check {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #22c55e;
+}
+
+.pricing-cta {
+  appearance: none;
+  border: 1px solid var(--tool-border);
+  background: var(--tool-surface-2);
+  color: var(--tool-text);
+  padding: 12px;
+  border-radius: var(--tool-radius);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  margin-top: auto;
+}
+
+.pricing-cta:hover {
+  background: var(--tool-tint-strong);
+  border-color: var(--tool-accent);
+}
+
+.pricing-cta--featured {
+  border-color: transparent;
+  color: #fff;
+}
+
+.pricing-cta--featured:hover {
+  filter: brightness(1.08);
+}
+
+.pricing-guarantee {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--tool-muted);
+}
+
+@media (max-width: 640px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .pricing-freqs {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---------- prose (marketing pages) ---------- */
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--tool-text);
+}
+.prose h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 8px 0 4px;
+}
+.prose p {
+  margin: 0;
+}
+.prose ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.prose a {
+  color: var(--tool-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- faq ---------- */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.faq-item {
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  padding: 14px 18px;
+}
+.faq-q {
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.faq-q::-webkit-details-marker {
+  display: none;
+}
+.faq-q::after {
+  content: "+";
+  font-size: 18px;
+  color: var(--tool-accent-text);
+  font-weight: 700;
+}
+details[open] .faq-q::after {
+  content: "−";
+}
+.faq-a {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--tool-muted);
+  line-height: 1.6;
+}
+
+/* ---------- blog ---------- */
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.blog-post {
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  padding: 18px;
+}
+.blog-date {
+  font-size: 12px;
+  color: var(--tool-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.blog-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 4px 0 6px;
+  color: var(--tool-text);
+}
+.blog-desc {
+  font-size: 14px;
+  color: var(--tool-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---------- Homepage Hero Section ---------- */
+.home-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hero {
+  padding: clamp(48px, 8vw, 80px) var(--tool-pad-x) clamp(40px, 6vw, 64px);
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    var(--tool-surface) 0%,
+    var(--tool-surface-2) 100%
+  );
+  border-bottom: 1px solid var(--tool-border);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: color-mix(in srgb, var(--tool-accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tool-accent) 30%, transparent);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tool-accent-text);
+  margin-bottom: 20px;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-badge .badge-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.hero-title {
+  margin: 0 0 16px;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--tool-text);
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  margin: 0 auto 28px;
+  max-width: 680px;
+  font-size: clamp(15px, 2.2vw, 18px);
+  line-height: 1.65;
+  color: var(--tool-muted);
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 32px);
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--tool-border);
+}
+
+.trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  font-size: 13px;
+  color: var(--tool-text);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.trust-item:hover {
+  border-color: var(--tool-accent);
+  box-shadow: var(--tool-shadow);
+  transform: translateY(-2px);
+}
+
+.trust-icon {
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.trust-text {
+  font-weight: 500;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--tool-radius);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--tool-accent);
+  color: var(--tool-on-accent);
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+  background: var(--tool-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--tool-accent) 35%, transparent);
+}
+
+.btn-secondary {
+  background: var(--tool-surface);
+  color: var(--tool-text);
+  border: 1px solid var(--tool-border);
+}
+
+.btn-secondary:hover {
+  background: var(--tool-tint-strong);
+  border-color: var(--tool-accent);
+  color: var(--tool-accent-text);
+}
+
+/* ---------- Tools Section ---------- */
+.tools-section {
+  padding: clamp(40px, 6vw, 64px) var(--tool-pad-x) clamp(48px, 8vw, 80px);
+}
+
+.tools-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.tools-title {
+  margin: 0 0 10px;
+  font-size: clamp(24px, 3.5vw, 32px);
+  font-weight: 800;
+  color: var(--tool-text);
+  letter-spacing: -0.015em;
+}
+
+.tools-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tool-muted);
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------- Tools Grid (Homepage) ---------- */
+.tools-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.tool-card {
+  margin: 0;
+}
+
+.tool-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  text-decoration: none;
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+  height: 100%;
+}
+
+.tool-link-card:hover {
+  border-color: var(--tool-accent);
+  box-shadow: var(--tool-shadow);
+  transform: translateY(-2px);
+}
+
+.tool-link-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--tool-text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1.3;
+}
+
+.tool-link-title span[aria-hidden="true"] {
+  color: var(--tool-accent-text);
+  font-size: 16px;
+  transition: transform 0.15s;
+}
+
+.tool-link-card:hover .tool-link-title span[aria-hidden="true"] {
+  transform: translateX(4px);
+}
+
+.tool-link-desc {
+  font-size: 13px;
+  color: var(--tool-muted);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.tool-link-href {
+  font-size: 11px;
+  color: var(--tool-muted);
+  font-family: var(--tool-mono), monospace;
+  opacity: 0.7;
+  margin-top: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .hero {
+    padding: 40px 16px 48px;
+  }
+
+  .hero-trust {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .trust-item {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Most Popular Tools (Homepage only) ---------- */
+/* A responsive grid of interactive cards for the six featured
+   tools, shown directly below the hero. Dedicated .popular-*
+   classes keep this section exclusive to the homepage — the
+   /tools catalogue keeps its own .tools-grid card styles. */
+.popular-section {
+  padding: clamp(40px, 6vw, 64px) var(--tool-pad-x) clamp(48px, 8vw, 80px);
+}
+
+.popular-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.popular-card-item {
+  margin: 0;
+}
+
+.popular-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  padding: 22px;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  text-decoration: none;
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.popular-card:hover,
+.popular-card:focus-visible {
+  border-color: var(--tool-accent);
+  box-shadow: var(--tool-shadow);
+  transform: translateY(-4px);
+  outline: none;
+}
+
+.popular-card-title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--tool-text);
+}
+
+.popular-card-desc {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tool-muted);
+}
+
+.popular-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tool-accent-text);
+}
+
+.popular-card-cta span[aria-hidden="true"] {
+  transition: transform 0.15s;
+}
+
+.popular-card:hover .popular-card-cta span[aria-hidden="true"],
+.popular-card:focus-visible .popular-card-cta span[aria-hidden="true"] {
+  transform: translateX(4px);
+}
+
+/* ---------- Why Choose DocFix? (Homepage only) ---------- */
+/* A 3-column feature/benefit grid highlighting privacy, speed, and
+   friction-free access. Dedicated .why-* classes keep this section
+   exclusive to the homepage. */
+.why-section {
+  padding: clamp(48px, 7vw, 72px) var(--tool-pad-x) clamp(56px, 9vw, 96px);
+  border-top: 1px solid var(--tool-border);
+}
+
+.why-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(36px, 5vw, 56px);
+}
+
+.why-title {
+  font-size: clamp(22px, 3.4vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--tool-text);
+  margin: 0 0 12px;
+}
+
+.why-subtitle {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--tool-muted);
+  margin: 0;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.why-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 24px;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.why-card:hover,
+.why-card:focus-visible {
+  border-color: var(--tool-accent);
+  box-shadow: var(--tool-shadow);
+  transform: translateY(-4px);
+  outline: none;
+}
+
+.why-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.why-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--tool-text);
+  margin: 0;
+}
+
+.why-card-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--tool-muted);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .why-card {
+    padding: 22px 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .popular-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .popular-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* ---------- Complete Directory / All Tools (Homepage only) ---------- */
+/* An accordion-style catalogue that keeps the full toolkit scannable
+   without overwhelming the hero fold. Each category expands on mobile;
+   on desktop the grid auto-reveals for quick browsing. */
+.directory-section {
+  padding: clamp(48px, 7vw, 72px) var(--tool-pad-x) clamp(56px, 9vw, 96px);
+  border-top: 1px solid var(--tool-border);
+  background: var(--tool-surface);
+}
+
+.directory-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(36px, 5vw, 56px);
+}
+
+.directory-title {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 3.4vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--tool-text);
+}
+
+.directory-subtitle {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--tool-muted);
+}
+
+.directory-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.directory-category {
+  background: var(--tool-surface-2);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  overflow: hidden;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.directory-category[open] {
+  border-color: var(--tool-accent);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--tool-accent) 8%, transparent);
+}
+
+.directory-category-head {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--tool-text);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition: background 0.15s;
+}
+
+.directory-category-head::-webkit-details-marker {
+  display: none;
+}
+
+.directory-category-head:hover {
+  background: var(--tool-tint);
+}
+
+.directory-category-name {
+  flex: 1;
+}
+
+.directory-category-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tool-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.directory-chevron {
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--tool-muted);
+  transition: transform 0.2s ease;
+}
+
+.directory-category[open] .directory-chevron {
+  transform: rotate(180deg);
+}
+
+.directory-tools-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 14px 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.directory-tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 14px;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-sm);
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.directory-tool-card:hover {
+  border-color: var(--tool-accent);
+  box-shadow: var(--tool-shadow);
+  transform: translateY(-2px);
+}
+
+.directory-tool-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--tool-text);
+}
+
+.directory-tool-desc {
+  font-size: 13px;
+  color: var(--tool-muted);
+  line-height: 1.5;
+}
+
+/* Desktop: show all categories expanded in a 2-column grid */
+@media (min-width: 769px) {
+  .directory-accordion {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .directory-category {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .directory-category[open] .directory-chevron {
+    transform: rotate(0deg);
+  }
+
+  .directory-category-head {
+    cursor: default;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 14px;
+  }
+
+  .directory-category-head:hover {
+    background: transparent;
+  }
+
+  .directory-tools-list {
+    padding: 14px 0 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .directory-category[open] .directory-chevron {
+    transform: rotate(180deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .directory-section {
+    padding: 40px 16px 52px;
+  }
+}
+
+/* ---------- Final CTA & Trust Footer (Homepage only) ---------- */
+.cta-section {
+  padding: clamp(56px, 9vw, 96px) var(--tool-pad-x);
+  background: linear-gradient(
+    180deg,
+    var(--tool-surface-2) 0%,
+    var(--tool-surface) 100%
+  );
+  border-top: 1px solid var(--tool-border);
+  text-align: center;
+}
+
+.cta-box {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: clamp(28px, 5vw, 40px);
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius);
+  box-shadow: var(--tool-shadow);
+}
+
+.cta-title {
+  margin: 0;
+  font-size: clamp(22px, 3.4vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--tool-text);
+}
+
+.cta-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tool-muted);
+  line-height: 1.6;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--tool-radius);
+  background: var(--tool-accent);
+  color: var(--tool-on-accent);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.cta-btn:hover {
+  background: var(--tool-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--tool-accent) 35%, transparent);
+}
+
+@media (max-width: 640px) {
+  .cta-section {
+    padding: 40px 16px 52px;
+  }
+
+  .cta-box {
+    padding: 24px 20px;
+  }
+
+  .cta-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+/* ---------- Ad spacing ---------- */
+.ad-banner-spacer {
+  margin-bottom: 32px;
+}

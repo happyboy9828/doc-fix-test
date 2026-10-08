@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <defs>
+    <!-- Brand Gradient for the Icon -->
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Logo Icon Container (Card Shape with border) -->
+  <rect x="4" y="6" width="48" height="48" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+
+  <!-- Document Graphic with a "Fix/Check" Accent -->
+  <!-- Document base shape -->
+  <path d="M18 16h14l6 6v16a2 2 0 0 1-2 2H18a2 2 0 0 1-2-2V18a2 2 0 0 1 2-2z" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Document fold corner -->
+  <path d="M32 16v6h6" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Checkmark / Fix symbol inside document -->
+  <path d="M20 28l3 3 7-7" fill="none" stroke="url(#brandGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Brand Typography: "Doc" -->
+  <text x="64" y="37" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="24" fill="#0F172A">Doc</text>
+
+  <!-- Brand Typography: "Fix" (Using Primary Accent Color) -->
+  <text x="109" y="37" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="24" fill="#2563EB">Fix</text>
+</svg>
