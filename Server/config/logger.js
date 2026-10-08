@@ -40,31 +40,38 @@ const transports = [
     format: consoleFormat,
     level: logLevel,
   }),
-  new winston.transports.File({
-    filename: path.join(logDir, 'error.log'),
-    level: 'error',
-    format: logFormat,
-    maxsize: 5242880,
-    maxFiles: 5,
-  }),
-  new winston.transports.File({
-    filename: path.join(logDir, 'combined.log'),
-    format: logFormat,
-    maxsize: 5242880,
-    maxFiles: 5,
-  }),
 ];
 
-if (process.env.NODE_ENV !== 'production') {
+const isServerless = !!process.env.VERCEL;
+
+if (!isServerless) {
   transports.push(
     new winston.transports.File({
-      filename: path.join(logDir, 'debug.log'),
-      level: 'debug',
+      filename: path.join(logDir, 'error.log'),
+      level: 'error',
       format: logFormat,
       maxsize: 5242880,
-      maxFiles: 3,
+      maxFiles: 5,
+    }),
+    new winston.transports.File({
+      filename: path.join(logDir, 'combined.log'),
+      format: logFormat,
+      maxsize: 5242880,
+      maxFiles: 5,
     })
   );
+
+  if (process.env.NODE_ENV !== 'production') {
+    transports.push(
+      new winston.transports.File({
+        filename: path.join(logDir, 'debug.log'),
+        level: 'debug',
+        format: logFormat,
+        maxsize: 5242880,
+        maxFiles: 3,
+      })
+    );
+  }
 }
 
 const logger = winston.createLogger({
